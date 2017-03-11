@@ -54,14 +54,37 @@ describe('Unit::test-cli::CliCode', function(){
       })
 
       it('should not replace stderr when told', function(){
-        let fn = () => process.stderr.write('out\n')
+        let fn = () => process.stderr.write('err\n')
         return CliCode.run(fn, {stderr: false}).then(result => {
           expect( result ).to.have.property('stderr' ).and.eql([])
         })
       })
 
+      it('should teardown an unfinished test', function(){
+        let fn = () => process.stderr.write('err\n')
+        let cc = CliCode.create(fn)
+        cc.setup()
+        process.stderr.write('err\n')
+        cc.tornDown()
+        expect(cc.teardown_done).to.be.true
+      })
+
+      it('should teardown an unfinished test', function(){
+        let fn = () => process.stderr.write('err\n')
+        let cc = CliCode.create(fn)
+        cc.tornDown()
+        expect(cc.teardown_done).to.be.true
+      })
+
+      it('should error when a bad function type is provided', function(){
+        let cfn = ()=>{}
+        return expect( CliCode.run(cfn, {function_type: 'wakka'}) )
+          .to.be.rejectedWith('No function type "wakka"')
+      })
+
       it('should error when no function is provided', function(){
-        expect(()=> CliCode.run()).to.throw(/CliCode requires a function to run/)
+        return expect( CliCode.run() )
+          .to.be.rejectedWith('CliCode requires a function to run')
       })
 
     })
@@ -105,7 +128,7 @@ describe('Unit::test-cli::CliCode', function(){
       let cc = null
 
       afterEach(function(){
-        cc.torndown()
+        cc.tornDown()
       })
 
       it('should print `out` to stdout from cli code', function(){
@@ -175,9 +198,12 @@ describe('Unit::test-cli::CliCode', function(){
     describe('callback functions', function(){
 
       let cc = null
+      let throwError = function( string = 'whatever' ){
+        throw new Error(string)
+      }
 
       afterEach(function(){
-        cc.torndown()
+        cc.tornDown()
       })
 
       it('should print `out` to stdout from cli code via callback', function(){
@@ -204,6 +230,26 @@ describe('Unit::test-cli::CliCode', function(){
           debug('callback stderr', result.stderr)
           expect( result.stderr ).to.eql(['err\n'])
         })
+      })
+
+      xit('should pick an thrown Error in a callback', function(){
+        let cbfn = (done) => {
+          setTimeout(throwError, 5)
+        }
+        cc = CliCode.create(cbfn, {callback: true})
+        return cc.run().then(result => {
+          expect(result).to.have.property('errors').and.to.eql([])
+          debug('callback stderr', result.stderr)
+          expect( result.stderr ).to.eql(['err\n'])
+        })
+      })
+
+      it('should pick a callback Error in the provided callback', function(){
+        let cbfn = (done) => {
+          setTimeout(()=> done(new Error('yep')), 2)
+        }
+        cc = CliCode.create(cbfn, {callback: true})
+        return expect( cc.run() ).to.be.rejectedWith('yep')
       })
 
     })

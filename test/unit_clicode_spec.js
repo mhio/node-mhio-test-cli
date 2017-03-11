@@ -1,5 +1,6 @@
 /* global expect */
 const debug = require('debug')('dply:test:test-cli:unit:cli_code')
+const fs = require('fs')
 const { CliCode } = require('../lib/cli_code')
 
 
@@ -60,7 +61,7 @@ describe('Unit::test-cli::CliCode', function(){
         })
       })
 
-      it('should teardown an unfinished test', function(){
+      it('should teardown an unfinished test with output to screen', function(){
         let fn = () => process.stderr.write('err\n')
         let cc = CliCode.create(fn)
         cc.setup()
@@ -232,15 +233,22 @@ describe('Unit::test-cli::CliCode', function(){
         })
       })
 
-      xit('should pick an thrown Error in a callback', function(){
-        let cbfn = (done) => {
-          setTimeout(throwError, 5)
+      it('should pick up an uncaughtException', function(){
+        let cbfn = () => {
+          process.emit('uncaughtException', new Error('emitted uncaughtException'))
         }
         cc = CliCode.create(cbfn, {callback: true})
-        return cc.run().then(result => {
-          expect(result).to.have.property('errors').and.to.eql([])
-          debug('callback stderr', result.stderr)
-          expect( result.stderr ).to.eql(['err\n'])
+        ccp = cc.run()
+        return ccp.then(result => {
+          throw new Error('nope')
+        }).catch(error => {
+          let result = error._cc_results
+          expect( result ).to.be.an.object
+          expect( result.errors).to.have.length(1)
+          expect( result.stderr ).to.eql([])
+          expect( result.stdout ).to.eql([])
+          let err = result.errors[0]
+          expect( err.message ).to.eql('emitted uncaughtException')
         })
       })
 

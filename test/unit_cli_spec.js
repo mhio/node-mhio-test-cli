@@ -14,7 +14,7 @@ describe('Unit::test-cli::Cli', function(){
         debug('bin err', result.stderr)
         expect( result.stdout[0] ).to.equal( 'test\n' )
         expect( result.stderr ).to.have.length(0)
-        expect(result).to.have.property('exit').and.equal(0)
+        expect(result).to.have.property('exit_code').and.equal(0)
       })
     })
 
@@ -25,7 +25,7 @@ describe('Unit::test-cli::Cli', function(){
         debug('bin err', result.stderr)
         expect( result.stderr[0] ).to.equal( 'testerr\n' )
         expect( result.stdout ).to.have.length( 0 )
-        expect(result).to.have.property('exit').and.equal(0)
+        expect(result).to.have.property('exit_code').and.equal(0)
       })
     })
 

@@ -9,8 +9,8 @@
     "test:int": "mocha test/int*",
     "test:debug": "DEBUG='*' mocha debug",
     "test:coverage": "istanbul cover _mocha && istanbul check-coverage",
-    "release:test": "set -uex; yarn test; npm version prerelease; yarn publish --tag testing --access public",
-    "release:patch": "set -uex; yarn run test:coverage; npm version patch; git push; yarn publish --access public; git push --tags"
+    "release:test": "set -uex; yarn test; npm version prerelease; npm publish --tag testing --access public",
+    "release:patch": "set -uex; yarn run test:coverage; npm version patch; git push; npm publish --access public; git push --tags"
   },
   "repository": {
     "type": "git",

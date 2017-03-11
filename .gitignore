@@ -6,4 +6,4 @@ test/output
 coverage/
 pkg/
 tmp/
-
+test-cli.sublime-workspace

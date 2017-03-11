@@ -1,3 +1,4 @@
+/* global expect */
 const debug = require('debug')('dply:test:test-cli:unit:cli')
 const { Cli } = require('../lib/cli')
 

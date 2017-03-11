@@ -1,3 +1,4 @@
+/* global expect */
 const debug = require('debug')('dply:test:test-cli:unit:clicode')
 const { CliCode } = require('../lib/cli_code')
 

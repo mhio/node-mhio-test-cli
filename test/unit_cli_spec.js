@@ -1,12 +1,10 @@
 const debug = require('debug')('dply:test:test-cli:unit:cli')
-const {TestEnv} = require('@deployable/test')
-const yargs = require('yargs')
-const Cli = require('../lib/cli')
+const { Cli } = require('../lib/cli')
 
 
-describe('Unit::test-cli::cli', function(){
+describe('Unit::test-cli::Cli', function(){
 
-  describe('Cli', function(){
+  describe('output interception', function(){
 
     it('should output test to stdout from binary', function(){
       return Cli.run(['echo','test']).then(result => {

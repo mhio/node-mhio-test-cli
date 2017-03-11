@@ -1,4 +1,4 @@
-/* global expect */
+/* global expect sinon */
 const debug = require('debug')('dply:test:test-cli:unit:cli')
 const { Cli } = require('../lib/cli')
 
@@ -34,19 +34,19 @@ describe('Unit::test-cli::Cli', function(){
         .to.be.rejectedWith('Cli requires a command to run')
     })
 
-    it('should reject on missing command', function(){
+    it('should output to stdout', function(){
       return Cli.run('echo', {args: ['test']}).then(results => {
         expect(results.stdout.join('')).to.equal('test\n')
       })
     })
 
-    it('should reject on missing command', function(){
+    it('should output to stderr', function(){
       return Cli.run(['echo','a'], {args: ['test']}).then(results => {
         expect(results.stdout.join('')).to.equal('a test\n')
       })
     })
 
-    it('should reject on missing command', function(){
+    it('should run the supplied stdout callback on stdout', function(){
       let spy = sinon.spy()
       return Cli.run(['echo','test'], {stdout_cb: spy}).then(results => {
         expect(results.stdout.join('')).to.equal('test\n')
@@ -54,7 +54,7 @@ describe('Unit::test-cli::Cli', function(){
       })
     })
 
-    it('should reject on missing command', function(){
+    it('should run the supplied stderr callback on stderr', function(){
       let spy = sinon.spy()
       return Cli.run(['node','-e','console.error("no")'], {stderr_cb: spy})
       .then(results => {

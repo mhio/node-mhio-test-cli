@@ -31,6 +31,21 @@ describe('Unit::test-cli::CliCode', function(){
         })
       })
 
+      it('should write to stdout as well as capture', function(){
+        let fn = () => process.stdout.write('out\n')
+        return CliCode.run(fn, {write_stdout: true}).then(result => {
+          expect( result ).to.have.property('stdout' ).and.eql(['out\n'])
+        })
+      })
+
+      it('should write to stderr as well as capture', function(){
+        let fn = () => process.stderr.write('err\n')
+        return CliCode.run(fn, {write_stderr: true}).then(result => {
+          debug('result',result)
+          expect( result ).to.have.property('stderr' ).and.eql(['err\n'])
+        })
+      })
+
     })
 
 

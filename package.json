@@ -1,7 +1,7 @@
 {
   "name": "@deployable/test-cli",
   "version": "0.1.0",
-  "description": "Helper classes for testing cli commands and code",
+  "description": "Cli command and code test helpers",
   "main": "lib/index.js",
   "scripts": {
     "test": "set -uex; yarn run test:unit; yarn run test:int",

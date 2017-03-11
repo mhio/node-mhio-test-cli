@@ -46,6 +46,24 @@ describe('Unit::test-cli::CliCode', function(){
         })
       })
 
+      it('should not replace stdout when told', function(){
+        let fn = () => process.stdout.write('out\n')
+        return CliCode.run(fn, {stdout: false}).then(result => {
+          expect( result ).to.have.property('stdout' ).and.eql([])
+        })
+      })
+
+      it('should not replace stderr when told', function(){
+        let fn = () => process.stderr.write('out\n')
+        return CliCode.run(fn, {stderr: false}).then(result => {
+          expect( result ).to.have.property('stderr' ).and.eql([])
+        })
+      })
+
+      it('should error when no function is provided', function(){
+        expect(()=> CliCode.run()).to.throw(/CliCode requires a function to run/)
+      })
+
     })
 
 
@@ -110,6 +128,27 @@ describe('Unit::test-cli::CliCode', function(){
         })
       })
 
+
+      it('should print `out` to stdout from cli code', function(){
+        let pfn = () => {
+          return new Promise((resolve)=>{
+            setTimeout(()=> {
+              console.log('out')
+              resolve(true)
+            }, 2)
+          })
+        }
+        cc = CliCode.create(pfn, {promise: true})
+        return cc.run().then(result => {
+          expect(result).to.have.property('errors').and.to.eql([])
+          expect(result).to.have.property('exit').and.be.false
+          expect(result).to.have.property('exit_code').and.be.null
+          debug('promise stdout', result.stdout)
+          expect( result.stdout ).to.eql(['out\n'])
+          expect( result.stderr ).to.eql([])
+        })
+      })
+
       it('should print `err` to stderr from cli code', function(){
         let pfn = () => {
           return new Promise((resolve)=>{
@@ -143,7 +182,6 @@ describe('Unit::test-cli::CliCode', function(){
 
       it('should print `out` to stdout from cli code via callback', function(){
         let cbfn = (done) => {
-          debug('done',done)
           console.log('out')
           done(null, true)
         }
@@ -157,7 +195,6 @@ describe('Unit::test-cli::CliCode', function(){
 
       it('should print `err` to stderr from cli code via callback', function(){
         let cbfn = (done) => {
-          debug('done',done)
           console.error('err')
           done(null, true)
         }

@@ -1,6 +1,5 @@
 const debug = require('debug')('dply:test:test-cli:unit:clicode')
-const yargs = require('yargs')
-const CliCode = require('../lib/cli_code')
+const { CliCode } = require('../lib/cli_code')
 
 
 describe('Unit::test-cli::CliCode', function(){

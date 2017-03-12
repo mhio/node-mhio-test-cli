@@ -1,6 +1,6 @@
 {
   "name": "@deployable/test-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cli command and code test helpers",
   "main": "lib/index.js",
   "scripts": {

@@ -35,7 +35,7 @@ describe('Unit::test-cli::CliCode', function(){
       it('should write to stdout as well as capture', function(){
         let fn = () => process.stdout.write('out\n')
         return CliCode.run(fn, {write_stdout: true}).then(result => {
-          expect( result ).to.have.property('stdout' ).and.eql(['out\n'])
+          expect( result ).to.have.property('stdout' ).and.eql(['out'])
         })
       })
 
@@ -43,7 +43,7 @@ describe('Unit::test-cli::CliCode', function(){
         let fn = () => process.stderr.write('err\n')
         return CliCode.run(fn, {write_stderr: true}).then(result => {
           debug('result',result)
-          expect( result ).to.have.property('stderr' ).and.eql(['err\n'])
+          expect( result ).to.have.property('stderr' ).and.eql(['err'])
         })
       })
 
@@ -103,7 +103,7 @@ describe('Unit::test-cli::CliCode', function(){
           expect(result).to.have.property('exit').and.be.true
           expect(result).to.have.property('exit_code').and.equal(0)
           debug('synchronous stdout', result.stdout)
-          expect( result.stdout ).to.eql(['out\n'])
+          expect( result.stdout ).to.eql(['out'])
         })
       })
 
@@ -117,7 +117,7 @@ describe('Unit::test-cli::CliCode', function(){
           expect(result).to.have.property('exit').and.be.true
           expect(result).to.have.property('exit_code').and.equal(0)
           debug('synchronous stderr', result.stderr)
-          expect( result.stderr ).to.eql(['err\n'])
+          expect( result.stderr ).to.eql(['err'])
         })
       })
 
@@ -147,7 +147,7 @@ describe('Unit::test-cli::CliCode', function(){
           expect(result).to.have.property('exit').and.be.false
           expect(result).to.have.property('exit_code').and.be.null
           debug('promise stdout', result.stdout)
-          expect( result.stdout ).to.eql(['out\n'])
+          expect( result.stdout ).to.eql(['out'])
           expect( result.stderr ).to.eql([])
         })
       })
@@ -168,7 +168,7 @@ describe('Unit::test-cli::CliCode', function(){
           expect(result).to.have.property('exit').and.be.false
           expect(result).to.have.property('exit_code').and.be.null
           debug('promise stdout', result.stdout)
-          expect( result.stdout ).to.eql(['out\n'])
+          expect( result.stdout ).to.eql(['out'])
           expect( result.stderr ).to.eql([])
         })
       })
@@ -188,7 +188,7 @@ describe('Unit::test-cli::CliCode', function(){
           expect(result).to.have.property('errors').and.to.eql([])
           expect(result).to.have.property('exit').and.be.true
           expect(result).to.have.property('exit_code').and.eql(1)
-          expect( result.stderr ).to.eql(['err\n'])
+          expect( result.stderr ).to.eql(['err'])
           expect( result.stdout ).to.eql([])
         })
       })
@@ -213,10 +213,10 @@ describe('Unit::test-cli::CliCode', function(){
           done(null, true)
         }
         cc = CliCode.create(cbfn, {callback: true})
-        return cc.run().then(result => {
+        return cc.run().then( result => {
           expect(result).to.have.property('errors').and.to.eql([])
           debug('callback code stdout', result.stdout)
-          expect( result.stdout ).to.eql(['out\n'])
+          expect( result.stdout ).to.eql(['out'])
         })
       })
 
@@ -226,10 +226,10 @@ describe('Unit::test-cli::CliCode', function(){
           done(null, true)
         }
         cc = CliCode.create(cbfn, {callback: true})
-        return cc.run().then(result => {
+        return cc.run().then( result => {
           expect(result).to.have.property('errors').and.to.eql([])
           debug('callback stderr', result.stderr)
-          expect( result.stderr ).to.eql(['err\n'])
+          expect( result.stderr ).to.eql(['err'])
         })
       })
 
@@ -238,8 +238,8 @@ describe('Unit::test-cli::CliCode', function(){
           process.emit('uncaughtException', new Error('emitted uncaughtException'))
         }
         cc = CliCode.create(cbfn, {callback: true})
-        ccp = cc.run()
-        return ccp.then(result => {
+        let ccp = cc.run()
+        return ccp.then( ()=> {
           throw new Error('nope')
         }).catch(error => {
           let result = error._cc_results
@@ -254,7 +254,7 @@ describe('Unit::test-cli::CliCode', function(){
 
       it('should pick a callback Error in the provided callback', function(){
         let cbfn = (done) => {
-          setTimeout(()=> done(new Error('yep')), 2)
+          setTimeout( ()=> done(new Error('yep')), 2)
         }
         cc = CliCode.create(cbfn, {callback: true})
         return expect( cc.run() ).to.be.rejectedWith('yep')

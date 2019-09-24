@@ -95,9 +95,9 @@
   integrity sha512-nhdUeHjIV8SwQXHucQHXjIltt8Cndw9iNiyejdAcPtZKro6W8MYbdOxdz9Q+T+yWntC9ub7rRMWDcao5sBpbDw==
 
 "@mhio/test@~0.4.2":
-  version "0.4.3"
-  resolved "https://registry.npmjs.org/@mhio/test/-/test-0.4.3.tgz#5feb3acd1a04b1136cfc2d1984044bf4af0117ec"
-  integrity sha512-n3+WBWXu6XImRuqqTlgL+ns9n299/iO4hr6e9sKCjfjAb87kN4zP1MlNJFRv9y3SlOBUsgWh7IypJp8RpgDzbA==
+  version "0.4.4"
+  resolved "https://registry.npmjs.org/@mhio/test/-/test-0.4.4.tgz#2ff8bcb22d02a2b96b0cbdcdddb916e91b7308e8"
+  integrity sha512-zjUbPVDbKstb+ZwQOnkUQhrgj2pisMx3JweRI3gImTVp56UD2fJ3kV0p5eTw1/kMoTi9t8xdN0D2WbkSKfrU4Q==
   dependencies:
     "@mhio/exception" "^0.2.1"
     bluebird "^3.0.1"

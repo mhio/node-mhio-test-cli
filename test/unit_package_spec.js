@@ -15,7 +15,7 @@ describe('Unit::test-cli::package', function(){
 
     it('should export a VERSION for the module', function(){
       expect( VERSION ).to.be.ok
-      expect( VERSION ).to.be.a.string
+      expect( VERSION ).to.be.a('string')
       expect( VERSION ).to.match(/^\d+\.\d+\.\d+/)
     })
 

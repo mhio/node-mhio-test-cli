@@ -1,6 +1,6 @@
-# [Deployable - Test Cli](https://github.com/deployable/deployable-test-cli)
+# [mhio - test cli commands](https://github.com/mhio/mhio-test-cli)
 
-## @deployable/test-cli
+## @mhio/test-cli
 
 Helper classes for testing cli commands and cli code.
 
@@ -8,9 +8,9 @@ Stores the stdout, stderr and return of the command for subsequent testing.
 
 ## Install
  
-    yarn add deployable-test-cli --dev
+    yarn add mhio-test-cli --dev
 
-    npm install deployable-test-cli --save-dev
+    npm install mhio-test-cli --save-dev
 
 ## Usage
 
@@ -18,7 +18,7 @@ Stores the stdout, stderr and return of the command for subsequent testing.
 
 ```javascript
 
-const { Cli } = require('@deployable/test-cli') 
+const { Cli } = require('@mhio/test-cli') 
 Cli.run(['echo', 'test']).then(results => {
   console.log(results.stdout)
   console.log(results.stdout)
@@ -31,7 +31,7 @@ Cli.run(['echo', 'test']).then(results => {
 
 ```javascript
 
-const { CliCode } = require('@deployable/test-cli') 
+const { CliCode } = require('@mhio/test-cli') 
 
 const fn = ()=> { 
   console.log('testout')
@@ -51,9 +51,9 @@ CliCode.run(fn).then(results => {
 
 ## About
 
-deployable-test-cli is released under the MIT license.
+mhio-test-cli is released under the MIT license.
 
-Copyright 2016 Matt Hoyle - code at deployable.co
+Copyright 2019 mhio
 
-https://github.com/deployable/deployable-test-cli
+https://github.com/mhio/mhio-test-cli
 

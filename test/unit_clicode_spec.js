@@ -243,7 +243,7 @@ describe('Unit::test-cli::CliCode', function(){
           throw new Error('nope')
         }).catch(error => {
           let result = error._cc_results
-          expect( result ).to.be.an.object
+          expect( result ).to.be.an('object')
           expect( result.errors).to.have.length(1)
           expect( result.stderr ).to.eql([])
           expect( result.stdout ).to.eql([])

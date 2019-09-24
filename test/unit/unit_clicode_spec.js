@@ -1,7 +1,7 @@
 /* global expect */
-const debug = require('debug')('dply:test:test-cli:unit:cli_code')
+const debug = require('debug')('mhio:test:test-cli:unit:cli_code')
 const fs = require('fs')
-const { CliCode } = require('../lib/cli_code')
+const { CliCode } = require('../../lib/cli_code')
 
 
 describe('Unit::test-cli::CliCode', function(){

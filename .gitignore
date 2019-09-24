@@ -7,3 +7,4 @@ coverage/
 pkg/
 tmp/
 test-cli.sublime-workspace
+.nyc_output/

@@ -1,6 +1,6 @@
 /* global expect sinon */
-const debug = require('debug')('dply:test:test-cli:unit:cli')
-const { Cli } = require('../lib/cli')
+const debug = require('debug')('mhio:test:test-cli:unit:cli')
+const { Cli } = require('../../lib/cli')
 
 
 describe('Unit::test-cli::Cli', function(){

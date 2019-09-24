@@ -1,5 +1,5 @@
 /* global expect */
-const { CliCode, Cli, VERSION } = require('../')
+const { CliCode, Cli, VERSION } = require('../../')
 
 describe('Unit::test-cli::package', function(){
 

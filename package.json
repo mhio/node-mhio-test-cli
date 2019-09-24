@@ -4,11 +4,11 @@
   "description": "Cli command and code test helpers",
   "main": "lib/index.js",
   "scripts": {
-    "test": "set -uex; yarn run test:unit; yarn run test:int",
-    "test:unit": "mocha test/unit*",
-    "test:int": "mocha test/int*",
+    "test": "mocha test/unit test/int",
+    "test:unit": "mocha test/unit",
+    "test:int": "mocha test/int",
     "test:debug": "DEBUG='*' mocha debug",
-    "test:coverage": "nyc cover _mocha && nyc check-coverage",
+    "test:coverage": "nyc _mocha test/unit test/int && nyc report -r html && nyc check-coverage",
     "release:test": "set -uex; yarn test; npm version prerelease; npm publish --tag testing --access public",
     "release:patch": "set -uex; yarn run test:coverage; npm version patch; git push; npm publish --access public; git push --tags"
   },

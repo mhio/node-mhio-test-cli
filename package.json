@@ -1,6 +1,6 @@
 {
   "name": "@mhio/test-cli",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Cli command and code test helpers",
   "main": "lib/index.js",
   "scripts": {
